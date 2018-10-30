@@ -18,17 +18,23 @@ class UserAsk(models.Model):
         verbose_name = u"用户咨询"
         verbose_name_plural = verbose_name
 
+    def __str__(self):
+        return '用户: {0} 手机号: {1}'.format(self.name, self.mobile)
+
 
 # 用户对于课程评论
 class CourseComments(models.Model):
-    course = models.ForeignKey(Course,on_delete=models.CASCADE, verbose_name=u"课程")
-    user = models.ForeignKey(UserProfile,on_delete=models.CASCADE, verbose_name=u"用户")
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name=u"课程")
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, verbose_name=u"用户")
     comments = models.CharField(max_length=250, verbose_name=u"评论")
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u"评论时间")
 
     class Meta:
         verbose_name = u"课程评论"
         verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return '用户({0})对于《{1}》 评论 :'.format(self.user, self.course)
 
 
 # 用户对于课程,机构，讲师的收藏
@@ -39,7 +45,7 @@ class UserFavorite(models.Model):
         (3, u"讲师")
     )
 
-    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE,verbose_name=u"用户")
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, verbose_name=u"用户")
     # course = models.ForeignKey(Course, verbose_name=u"课程")
     # teacher = models.ForeignKey()
     # org = models.ForeignKey()
@@ -59,6 +65,9 @@ class UserFavorite(models.Model):
         verbose_name = u"用户收藏"
         verbose_name_plural = verbose_name
 
+    def __str__(self):
+        return '用户({0})收藏了{1} '.format(self.user, self.fav_type)
+
 
 # 用户消息表
 class UserMessage(models.Model):
@@ -76,14 +85,20 @@ class UserMessage(models.Model):
         verbose_name = u"用户消息"
         verbose_name_plural = verbose_name
 
+    def __str__(self):
+        return '用户({0})接收了{1} '.format(self.user, self.message)
+
 
 # 用户课程
 class UserCourse(models.Model):
     # 会涉及两个外键: 1. 用户， 2. 课程。import进来
-    course = models.ForeignKey(Course, on_delete=models.CASCADE,verbose_name=u"课程")
-    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE,verbose_name=u"用户")
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name=u"课程")
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, verbose_name=u"用户")
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u"添加时间")
 
     class Meta:
         verbose_name = u"用户课程"
         verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return '用户({0})学习了{1} '.format(self.user, self.course)

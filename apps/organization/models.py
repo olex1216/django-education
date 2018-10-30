@@ -14,6 +14,9 @@ class CityDict(models.Model):
         verbose_name = u"城市"
         verbose_name_plural = verbose_name
 
+    def __str__(self):
+        return self.name
+
 
 # 课程机构
 class CourseOrg(models.Model):
@@ -29,12 +32,15 @@ class CourseOrg(models.Model):
     address = models.CharField(max_length=150, verbose_name=u"机构地址")
     # 一个城市可以有很多课程机构，通过将city设置外键，变成课程机构的一个字段
     # 可以让我们通过机构找到城市
-    city = models.ForeignKey(CityDict,on_delete=models.CASCADE, verbose_name=u"所在城市")
+    city = models.ForeignKey(CityDict, on_delete=models.CASCADE, verbose_name=u"所在城市")
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u"添加时间")
 
     class Meta:
         verbose_name = u"课程机构"
         verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return "课程机构: {0}".format(self.name)
 
 
 # 讲师
@@ -54,3 +60,6 @@ class Teacher(models.Model):
     class Meta:
         verbose_name = u"教师"
         verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return "[{0}]的教师: {1}".format(self.org, self.name)
