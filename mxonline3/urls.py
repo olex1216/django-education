@@ -16,14 +16,23 @@ Including another URLconf
 # from django.contrib import admin
 from django.views.generic import TemplateView
 import xadmin
-from django.urls import path
-# from users.views import user_login
-from users.views import LoginView
+from django.urls import path, include, re_path
+from users.views import LoginView, RegisterView, ActiveUserView
 
 urlpatterns = [
     path('xadmin/', xadmin.site.urls),
+
     # TemplateView.as_view会将template转换为view
     path('', TemplateView.as_view(template_name="index.html"), name="index"),
-    path('login/', LoginView.as_view(),  name="login")
 
-]
+    # 注册url
+    path("register/", RegisterView.as_view(), name="register"),
+
+    # 基于类方法实现登录,这里是调用它的方法
+    path('login/', LoginView.as_view(), name="login"),
+
+    # 验证码url
+    path("captcha/", include('captcha.urls')),
+
+]    # 激活用户url
+    re_path('active/(?P<active_code>.*)/', ActiveUserView.as_view(), name= "user_active")
