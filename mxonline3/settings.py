@@ -39,10 +39,10 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'users.apps.UsersConfig',
-    'operation.apps.OperationConfig',
-    'organization.apps.OrganizationConfig',
-    'courses.apps.CoursesConfig',
+    'apps.users.apps.UsersConfig',
+    'apps.operation.apps.OperationConfig',
+    'apps.organization.apps.OrganizationConfig',
+    'apps.courses.apps.CoursesConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'xadmin',
     'crispy_forms',
     'captcha',
+    'pure_pagination',
 ]
 # 此处重载是为了使我们的UserProfile生效
 AUTH_USER_MODEL = "users.UserProfile"
@@ -80,6 +81,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
             ],
         },
     },
@@ -144,6 +146,11 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
 
+# 设置我们上传文件的路径
+
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # 发送邮件的setting设置
 
@@ -151,5 +158,11 @@ EMAIL_HOST = "smtp.qq.com"
 EMAIL_PORT = 25
 EMAIL_HOST_USER = "mxonline@mtianyan.cn"
 EMAIL_HOST_PASSWORD = "ystfiwntwmonjebe"
-EMAIL_USE_TLS= True
+EMAIL_USE_TLS = True
 EMAIL_FROM = "mxonline@mtianyan.cn"
+
+PAGINATION_SETTINGS = {
+    'PAGE_RANGE_DISPLAYED': 10,
+    'MARGIN_PAGES_DISPLAYED': 2,
+    'SHOW_FIRST_PAGE_WHEN_INVALID': True,
+}
