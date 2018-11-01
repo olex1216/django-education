@@ -86,6 +86,7 @@ class OrgHomeView(View):
     def get(self, request, org_id):
         # 向前端传值，表明现在在home页
         current_page = "home"
+
         # 根据id取到课程机构
         course_org = CourseOrg.objects.get(id=int(org_id))
         # 向前端传值说明用户是否收藏
