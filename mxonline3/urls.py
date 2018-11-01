@@ -43,18 +43,19 @@ urlpatterns = [
     # 忘记密码
     path('forget/', ForgetPwdView.as_view(), name="forget_pwd"),
 
-    # 重置密码urlc ：用来接收来自邮箱的重置链接
+    # 重置密码 ：用来接收来自邮箱的重置链接
     re_path('reset/(?P<active_code>.*)/', ResetView.as_view(), name="reset_pwd"),
 
     # 修改密码url; 用于passwordreset页面提交表单
     path('modify_pwd/', ModifyPwdView.as_view(), name="modify_pwd"),
 
-    # 课程机构首页url
-    # path('org_list/', OrgView.as_view(), name="org_list"),
+    # 处理图片显示的url,使用Django自带serve,传入参数告诉它去哪个路径找，我们有配置好的路径MEDIAROOT
+    re_path(r'^media/(?P<path>.*)', serve, {"document_root": MEDIA_ROOT}),
 
     # 课程机构app的url配置
-    path("org/", include('organization.urls',namespace="org")),
+    path("org/", include('organization.urls', namespace="org")),
 
-    # 处理图片显示的url,使用Django自带serve,传入参数告诉它去哪个路径找，我们有配置好的路径MEDIAROOT
-    re_path(r'^media/(?P<path>.*)', serve, {"document_root": MEDIA_ROOT})
+    # 课程app的url配置
+    path("course/", include('courses.urls', namespace="course")),
+
 ]
