@@ -4,7 +4,7 @@ __author__ = 'hayden'
 __date__ = '2018/10/31 19:37'
 
 from organization.views import OrgView, AddUserAskView, OrgHomeView, OrgCourseView, OrgDescView, OrgTeacherView, \
-    AddFavView
+    AddFavView, TeacherListView,TeacherDetailView
 from django.urls import path, re_path
 
 app_name = "organization"
@@ -28,7 +28,12 @@ urlpatterns = [
     # 访问机构讲师
     re_path('teacher/(?P<org_id>\d+)/', OrgTeacherView.as_view(), name="org_teacher"),
 
+    # 讲师列表
+    path('teacher/list/', TeacherListView.as_view(), name="teacher_list"),
+
     # 机构收藏
     path('add_fav/', AddFavView.as_view(), name="add_fav"),
 
+    # 访问机构讲师
+    re_path('teacher/detail/(?P<teacher_id>\d+)/', TeacherDetailView.as_view(), name="teacher_detail"),
 ]
