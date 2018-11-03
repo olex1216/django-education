@@ -15,6 +15,15 @@ class CourseListView(View):
 
         # 热门课程推荐
         hot_courses = Course.objects.all().order_by("-students")[:3]
+
+        # 搜索功能
+        search_keywords = request.GET.get('keywords', '')
+        if search_keywords:
+            # 在name字段进行操作,做like语句的操作。i代表不区分大小写
+            # or操作使用Q
+            all_course = all_course.filter(Q(name__icontains=search_keywords) | Q(desc__icontains=search_keywords) | Q(
+                detail__icontains=search_keywords))
+
         # 对课程进行分页
         # 尝试获取前台get请求传递过来的page参数
         # 如果是不合法的配置参数默认返回第一页
